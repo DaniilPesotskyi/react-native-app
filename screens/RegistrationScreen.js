@@ -40,57 +40,62 @@ const RegistrationScreen = () => {
   }, []);
 
   return (
-    <View>
-      <View>
-        <Image />
-        <TouchableOpacity></TouchableOpacity>
-      </View>
-      <Text style={styles.formTitle}>Реєстрація</Text>
-      <View style={styles.inputsList}>
-        <TextInput
-          style={styles.input}
-          value={login}
-          onChangeText={onChangeLogin}
-          placeholder="Логін"
-        />
-        <TextInput
-          style={styles.input}
-          value={email}
-          onChangeText={onChangeEmail}
-          placeholder="Адреса електронної пошти"
-        />
-        <View>
+    <ImageBackground source={BackgroundImage}>
+      <View style={styles.registrationForm}>
+        <Text style={styles.formTitle}>Реєстрація</Text>
+        <View style={styles.inputsList}>
           <TextInput
             style={styles.input}
-            value={password}
-            onChangeText={onChangePassword}
-            secureTextEntry={isSecureTextEntry}
-            placeholder="Пароль"
+            value={login}
+            onChangeText={onChangeLogin}
+            placeholder="Логін"
           />
-          <TouchableOpacity
-            onPress={() => setIsSecureTextEntry(!isSecureTextEntry)}
-            style={styles.showPasswordButton}
-          >
-            <Text>Показати</Text>
-          </TouchableOpacity>
+          <TextInput
+            style={styles.input}
+            value={email}
+            onChangeText={onChangeEmail}
+            placeholder="Адреса електронної пошти"
+          />
+          <View>
+            <TextInput
+              style={styles.input}
+              value={password}
+              onChangeText={onChangePassword}
+              secureTextEntry={isSecureTextEntry}
+              placeholder="Пароль"
+            />
+            <TouchableOpacity
+              onPress={() => setIsSecureTextEntry(!isSecureTextEntry)}
+              style={styles.showPasswordButton}
+            >
+              <Text>Показати</Text>
+            </TouchableOpacity>
+          </View>
         </View>
+        {!isKeyboardVisible && (
+          <TouchableOpacity style={styles.submitButton}>
+            <Text>Зареєстуватися</Text>
+          </TouchableOpacity>
+        )}
+        {!isKeyboardVisible && (
+          <View>
+            <Text>Вже є акаунт?</Text>
+            <TouchableOpacity>
+              <Text>Увійти</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
-      {!isKeyboardVisible && (
-        <TouchableOpacity style={styles.submitButton}>
-          <Text>Зареєстуватися</Text>
-        </TouchableOpacity>
-      )}
-      <View>
-        <Text>Вже є акаунт?</Text>
-        <TouchableOpacity>
-          <Text>Увійти</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  registrationForm: {
+    marginTop: 263,
+    backgroundColor: "#FFFFFF",
+  },
+
   formTitle: {
     marginBottom: 33,
 
