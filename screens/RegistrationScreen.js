@@ -137,6 +137,8 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: "auto",
 
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
     backgroundColor: "#FFFFFF",
     alignItems: "center",
   },
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
   },
 
   addPhotoButton: {
-    position: 'absolute',
+    position: "absolute",
     top: 81,
     right: -12,
   },
@@ -217,7 +219,7 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
 
     backgroundColor: "#FF6C00",
-    borderRadius: 12,
+    borderRadius: 100,
   },
 
   submitButtonText: {
