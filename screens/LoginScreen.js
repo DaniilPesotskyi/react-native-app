@@ -7,6 +7,7 @@ import {
   Keyboard,
   Image,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from "react-native";
 import BackgroundImage from "./../assets/images/bg-photo.jpg";
 
@@ -37,51 +38,62 @@ const LoginScreen = () => {
     };
   }, []);
 
+  onUserLogin = () => {
+    console.log("--- ФОРМА ЛОГІНУ ---");
+    console.log("Адреса електронної пошти: ", email);
+    console.log("Пароль: ", password);
+
+    onChangeEmail("");
+    onChangePassword("");
+  };
+
   return (
-    <View style={styles.container}>
-      <Image source={BackgroundImage} style={styles.backgroundImage} />
-      <View style={styles.registrationForm}>
-        <Text style={styles.formTitle}>Увійти</Text>
-        <View style={styles.inputsList}>
-          <TextInput
-            placeholderTextColor="#BDBDBD"
-            style={styles.input}
-            value={email}
-            onChangeText={onChangeEmail}
-            placeholder="Адреса електронної пошти"
-          />
-          <View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Image source={BackgroundImage} style={styles.backgroundImage} />
+        <View style={styles.registrationForm}>
+          <Text style={styles.formTitle}>Увійти</Text>
+          <View style={styles.inputsList}>
             <TextInput
               placeholderTextColor="#BDBDBD"
               style={styles.input}
-              value={password}
-              onChangeText={onChangePassword}
-              secureTextEntry={isSecureTextEntry}
-              placeholder="Пароль"
+              value={email}
+              onChangeText={onChangeEmail}
+              placeholder="Адреса електронної пошти"
             />
-            <TouchableOpacity
-              onPress={() => setIsSecureTextEntry(!isSecureTextEntry)}
-              style={styles.showPasswordButton}
-            >
-              <Text style={styles.showPasswordButtonText}>Показати</Text>
-            </TouchableOpacity>
+            <View>
+              <TextInput
+                placeholderTextColor="#BDBDBD"
+                style={styles.input}
+                value={password}
+                onChangeText={onChangePassword}
+                secureTextEntry={isSecureTextEntry}
+                placeholder="Пароль"
+              />
+              <TouchableOpacity
+                onPress={() => setIsSecureTextEntry(!isSecureTextEntry)}
+                style={styles.showPasswordButton}
+              >
+                <Text style={styles.showPasswordButtonText}>Показати</Text>
+              </TouchableOpacity>
+            </View>
           </View>
+          {!isKeyboardVisible && (
+            <TouchableOpacity style={styles.submitButton} onPress={onUserLogin}>
+              <Text style={styles.submitButtonText}>Увійти</Text>
+            </TouchableOpacity>
+          )}
+          {!isKeyboardVisible && (
+            <View style={styles.difAction}>
+              <Text style={styles.difActionText}>Немає акаунту?</Text>
+              <TouchableOpacity>
+                <Text style={styles.difActionText}>Зареєструватися</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
-        {!isKeyboardVisible && (
-          <TouchableOpacity style={styles.submitButton}>
-            <Text style={styles.submitButtonText}>Увійти</Text>
-          </TouchableOpacity>
-        )}
-        {!isKeyboardVisible && (
-          <View style={styles.difAction}>
-            <Text style={styles.difActionText}>Немає акаунту?</Text>
-            <TouchableOpacity>
-              <Text style={styles.difActionText}>Зареєструватися</Text>
-            </TouchableOpacity>
-          </View>
-        )}
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

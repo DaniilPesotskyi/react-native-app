@@ -7,6 +7,7 @@ import {
   Keyboard,
   Image,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 import BackgroundImage from "./../assets/images/bg-photo.jpg";
@@ -39,83 +40,96 @@ const RegistrationScreen = () => {
     };
   }, []);
 
+  onUserRegistration = () => {
+    console.log('--- ФОРМА РЕЄСТРАЦІЇ ---')
+    console.log('Логін: ', login)
+    console.log('Адреса електронноъ пошти: ', email)
+    console.log('Пароль: ', password)
+
+    onChangeLogin('')
+    onChangeEmail('')
+    onChangePassword('')
+  }
+
   return (
-    <View style={styles.container}>
-      <Image source={BackgroundImage} style={styles.backgroundImage} />
-      <View style={styles.registrationForm}>
-        <View style={styles.imageInputWrap}>
-          <TouchableOpacity style={styles.addPhotoButton}>
-            <Svg
-              width="25"
-              height="25"
-              viewBox="0 0 25 25"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <Circle
-                cx="12.5"
-                cy="12.5"
-                r="12"
-                fill="white"
-                stroke="#FF6C00"
-              />
-              <Path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M13 6H12V12H6V13H12V19H13V13H19V12H13V6Z"
-                fill="#FF6C00"
-              />
-            </Svg>
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.formTitle}>Реєстрація</Text>
-        <View style={styles.inputsList}>
-          <TextInput
-            placeholderTextColor="#BDBDBD"
-            style={styles.input}
-            value={login}
-            onChangeText={onChangeLogin}
-            placeholder="Логін"
-          />
-          <TextInput
-            placeholderTextColor="#BDBDBD"
-            style={styles.input}
-            value={email}
-            onChangeText={onChangeEmail}
-            placeholder="Адреса електронної пошти"
-          />
-          <View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Image source={BackgroundImage} style={styles.backgroundImage} />
+        <View style={styles.registrationForm}>
+          <View style={styles.imageInputWrap}>
+            <TouchableOpacity style={styles.addPhotoButton}>
+              <Svg
+                width="25"
+                height="25"
+                viewBox="0 0 25 25"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <Circle
+                  cx="12.5"
+                  cy="12.5"
+                  r="12"
+                  fill="white"
+                  stroke="#FF6C00"
+                />
+                <Path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M13 6H12V12H6V13H12V19H13V13H19V12H13V6Z"
+                  fill="#FF6C00"
+                />
+              </Svg>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.formTitle}>Реєстрація</Text>
+          <View style={styles.inputsList}>
             <TextInput
               placeholderTextColor="#BDBDBD"
               style={styles.input}
-              value={password}
-              onChangeText={onChangePassword}
-              secureTextEntry={isSecureTextEntry}
-              placeholder="Пароль"
+              value={login}
+              onChangeText={onChangeLogin}
+              placeholder="Логін"
             />
-            <TouchableOpacity
-              onPress={() => setIsSecureTextEntry(!isSecureTextEntry)}
-              style={styles.showPasswordButton}
-            >
-              <Text style={styles.showPasswordButtonText}>Показати</Text>
-            </TouchableOpacity>
+            <TextInput
+              placeholderTextColor="#BDBDBD"
+              style={styles.input}
+              value={email}
+              onChangeText={onChangeEmail}
+              placeholder="Адреса електронної пошти"
+            />
+            <View>
+              <TextInput
+                placeholderTextColor="#BDBDBD"
+                style={styles.input}
+                value={password}
+                onChangeText={onChangePassword}
+                secureTextEntry={isSecureTextEntry}
+                placeholder="Пароль"
+              />
+              <TouchableOpacity
+                onPress={() => setIsSecureTextEntry(!isSecureTextEntry)}
+                style={styles.showPasswordButton}
+              >
+                <Text style={styles.showPasswordButtonText}>Показати</Text>
+              </TouchableOpacity>
+            </View>
           </View>
+          {!isKeyboardVisible && (
+            <TouchableOpacity style={styles.submitButton} onPress={onUserRegistration}>
+              <Text style={styles.submitButtonText}>Зареєстуватися</Text>
+            </TouchableOpacity>
+          )}
+          {!isKeyboardVisible && (
+            <View style={styles.difAction}>
+              <Text style={styles.difActionText}>Вже є акаунт?</Text>
+              <TouchableOpacity>
+                <Text style={styles.difActionText}>Увійти</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
-        {!isKeyboardVisible && (
-          <TouchableOpacity style={styles.submitButton}>
-            <Text style={styles.submitButtonText}>Зареєстуватися</Text>
-          </TouchableOpacity>
-        )}
-        {!isKeyboardVisible && (
-          <View style={styles.difAction}>
-            <Text style={styles.difActionText}>Вже є акаунт?</Text>
-            <TouchableOpacity>
-              <Text style={styles.difActionText}>Увійти</Text>
-            </TouchableOpacity>
-          </View>
-        )}
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

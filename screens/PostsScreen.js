@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-import Svg, { Path, Rect } from "react-native-svg";
+import Svg, { Path } from "react-native-svg";
 import userImage from "./../assets/images/userImage.jpg";
 const PostsScreen = () => {
   return (
