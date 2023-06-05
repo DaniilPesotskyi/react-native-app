@@ -12,7 +12,7 @@ import {
 import Svg, { Circle, Path } from "react-native-svg";
 import BackgroundImage from "./../assets/images/bg-photo.jpg";
 
-const RegistrationScreen = () => {
+const RegistrationScreen = ({navigation}) => {
   const [login, onChangeLogin] = useState("");
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
@@ -122,7 +122,7 @@ const RegistrationScreen = () => {
           {!isKeyboardVisible && (
             <View style={styles.difAction}>
               <Text style={styles.difActionText}>Вже є акаунт?</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
                 <Text style={styles.difActionText}>Увійти</Text>
               </TouchableOpacity>
             </View>
