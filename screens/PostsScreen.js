@@ -2,12 +2,12 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
 import Svg, { Path } from "react-native-svg";
 import userImage from "./../assets/images/userImage.jpg";
-const PostsScreen = () => {
+const PostsScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.screenHeader}>
         <Text style={styles.screenTitle}>Публікації</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
           <Svg width={24} height={24}>
             <Path
               d="M10 22H5C3.89543 22 3 21.1046 3 20V4C3 2.89543 3.89543 2 5 2H10"
