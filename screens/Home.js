@@ -1,32 +1,18 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-// import { View } from "react-native";
+
+import PostsScreen from "./PostsScreen";
+import CreatePostsScreen from "./CreatePostsScreen";
 
 const Tabs = createBottomTabNavigator();
 
 const Home = () => {
   return (
     <Tabs.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          if (route.name === "Profile") {
-            iconName = focused
-              ? "ios-information-circle"
-              : "ios-information-circle-outline";
-          } else if (route.name === "Settings") {
-            iconName = focused ? "ios-list-box" : "ios-list";
-          }
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor: "tomato",
-        inactiveTintColor: "gray",
-      }}
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Posts"
     >
-      <Tabs.Screen name="Settings" component={Settings} />
-      <Tabs.Screen name="Profile" component={Profile} />
+      <Tabs.Screen name="Posts" component={PostsScreen} />
+      <Tabs.Screen name="CreatePost" component={CreatePostsScreen} />
     </Tabs.Navigator>
   );
 };

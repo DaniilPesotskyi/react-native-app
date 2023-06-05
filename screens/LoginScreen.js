@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import BackgroundImage from "./../assets/images/bg-photo.jpg";
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
@@ -39,10 +39,11 @@ const LoginScreen = ({navigation}) => {
   }, []);
 
   onUserLogin = () => {
+
     console.log("--- ФОРМА ЛОГІНУ ---");
     console.log("Адреса електронної пошти: ", email);
     console.log("Пароль: ", password);
-
+    navigation.navigate("Home")
     onChangeEmail("");
     onChangePassword("");
   };
@@ -86,7 +87,9 @@ const LoginScreen = ({navigation}) => {
           {!isKeyboardVisible && (
             <View style={styles.difAction}>
               <Text style={styles.difActionText}>Немає акаунту?</Text>
-              <TouchableOpacity onPress={() => navigation.navigate("Registration")}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Registration")}
+              >
                 <Text style={styles.difActionText}>Зареєструватися</Text>
               </TouchableOpacity>
             </View>

@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     marginTop: 20,
+    backgroundColor: "#FFFFFF",
   },
 
   screenHeader: {
