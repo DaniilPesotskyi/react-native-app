@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import * as Location from "expo-location";
+import { Camera } from "expo-camera";
+
 import {
   StyleSheet,
   Text,
@@ -15,6 +18,19 @@ const CreatePostsScreen = ({ navigation }) => {
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [isButtonActive, setIsButtonActive] = useState(false);
+  const [photo, setPhoto] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
+
+  const handleAddPhoto = async () => {
+    const { status } = await Camera.requestCameraPermissionsAsync();
+
+    if (status === "granted") {
+      const { uri } = await Camera.takePictureAsync();
+      setPhoto(uri);
+    } else {
+      console.log("Status null");
+    }
+  };
 
   const checkFormCompletion = () => {
     if (title && location) {
@@ -27,6 +43,21 @@ const CreatePostsScreen = ({ navigation }) => {
   useEffect(() => {
     checkFormCompletion();
   }, [title, location]);
+
+  const onSubmit = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      console.log("Permission to access location was denied");
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    const coords = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    };
+    setUserLocation(coords);
+    navigation.navigate("Posts");
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -60,31 +91,38 @@ const CreatePostsScreen = ({ navigation }) => {
         </View>
         <View style={styles.mainContainer}>
           <View style={styles.photoInput}>
-            <TouchableOpacity style={styles.photoInputBtn}>
-              <Svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+            {photo ? (
+              <Image source={{ uri: photo }} style={styles.previewImage} />
+            ) : (
+              <TouchableOpacity
+                style={styles.photoInputBtn}
+                onPress={handleAddPhoto}
               >
-                <G clip-path="url(#clip0_36_0)">
-                  <Path
-                    d="M11.9998 15.2C13.7671 15.2 15.1998 13.7673 15.1998 12C15.1998 10.2327 13.7671 8.79999 11.9998 8.79999C10.2325 8.79999 8.7998 10.2327 8.7998 12C8.7998 13.7673 10.2325 15.2 11.9998 15.2Z"
-                    fill="#BDBDBD"
-                  />
-                  <Path
-                    d="M9 2L7.17 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4H16.83L15 2H9ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17Z"
-                    fill="#BDBDBD"
-                  />
-                </G>
-                <Defs>
-                  <ClipPath id="clip0_36_0">
-                    <Rect width="24" height="24" fill="white" />
-                  </ClipPath>
-                </Defs>
-              </Svg>
-            </TouchableOpacity>
+                <Svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <G clip-path="url(#clip0_36_0)">
+                    <Path
+                      d="M11.9998 15.2C13.7671 15.2 15.1998 13.7673 15.1998 12C15.1998 10.2327 13.7671 8.79999 11.9998 8.79999C10.2325 8.79999 8.7998 10.2327 8.7998 12C8.7998 13.7673 10.2325 15.2 11.9998 15.2Z"
+                      fill="#BDBDBD"
+                    />
+                    <Path
+                      d="M9 2L7.17 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4H16.83L15 2H9ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17Z"
+                      fill="#BDBDBD"
+                    />
+                  </G>
+                  <Defs>
+                    <ClipPath id="clip0_36_0">
+                      <Rect width="24" height="24" fill="white" />
+                    </ClipPath>
+                  </Defs>
+                </Svg>
+              </TouchableOpacity>
+            )}
           </View>
           <Text style={styles.photoInputText}>Завантажте фото</Text>
           <KeyboardAvoidingView
@@ -139,6 +177,7 @@ const CreatePostsScreen = ({ navigation }) => {
           </KeyboardAvoidingView>
           <TouchableOpacity
             style={isButtonActive ? styles.publishBtnActive : styles.publishBtn}
+            onPress={onSubmit}
           >
             <Text
               style={

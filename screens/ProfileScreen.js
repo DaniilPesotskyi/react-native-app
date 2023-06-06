@@ -112,7 +112,7 @@ const ProfileScreen = ({navigation}) => {
                 <Text style={styles.dataValue}>153</Text>
               </View>
               <View style={styles.locationWrap}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("MapScreen")}>
                   <Svg
                     style={styles.locationIcon}
                     width={24}
